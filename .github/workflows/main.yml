@@ -1,10 +1,10 @@
 name: Node
 
 env:
-  'S3_BUCKET_NAME': 'elasticbeanstalk-us-east-1-339713000918'
-  'EBS_APPLICATION_NAME': 'swiftprod'
-  'EBS_ENVIRONMENT_NAME': 'swiftprod-env'
-  'AWS_REGION': 'us-east-1'
+  'S3_BUCKET_NAME': 'elasticbeanstalk-eu-west-1-211125756778'
+  'EBS_APPLICATION_NAME': 'airplate-backend'
+  'EBS_ENVIRONMENT_NAME': 'Airplate-backend-env-3'
+  'AWS_REGION': 'eu-west-1'
   'DEPLOY_PACKAGE_NAME': 'node-app-${{github.sha}}.zip'
 
 on:
