@@ -17,14 +17,15 @@ const createUser = async (userBody) => {
 
 /**
  * Query for users
+ * @param {Object} filter - Mongo filter
  * @param {Object} options - Query options
  * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
  * @param {number} [options.limit] - Maximum number of results per page (default = 10)
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryUsers = async (filter, options) => {
-  const users = await User.paginate(filter, options);
+const queryUsers = async (filter) => {
+  const users = await User.QueryUsers(filter);
   return users;
 };
 
@@ -60,9 +61,8 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  Object.assign(user, updateBody);
-  await user.save();
-  return user;
+  const updatedUser = await User.UpdateUser(userId, updateBody);
+  return updatedUser;
 };
 
 /**
@@ -75,7 +75,7 @@ const deleteUserById = async (userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  await user.remove();
+  await User.DeleteRecord({ id: user.id });
   return user;
 };
 
