@@ -36,7 +36,12 @@ app.use(xss());
 app.use(compression());
 
 // enable cors
-app.use(cors());
+app.use(
+  cors({
+    allowedHeaders: '*',
+  })
+);
+
 app.options('*', cors());
 
 // jwt authentication
