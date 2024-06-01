@@ -8,8 +8,11 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
     return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate'));
   }
   req.user = user;
+  // Allow users to update their own information
+  // eslint-disable-next-line eqeqeq
+  const isUpdatingOwnInfo = req.params.userId && req.params.userId == user.id;
 
-  if (requiredRights.length) {
+  if (requiredRights.length && !isUpdatingOwnInfo) {
     const userRights = roleRights.get(user.role);
     const hasRequiredRights = requiredRights.every((requiredRight) => userRights.includes(requiredRight));
     if (!hasRequiredRights && req.params.userId !== user.id) {

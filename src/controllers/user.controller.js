@@ -3,6 +3,7 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
+const { getUserById } = require('../services/user.service');
 
 const createUser = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -32,6 +33,10 @@ const deleteUser = catchAsync(async (req, res) => {
   await userService.deleteUserById(req.params.userId);
   res.status(httpStatus.NO_CONTENT).send();
 });
+const updatePassword = catchAsync(async (req, res) => {
+  await userService.UpdateUserPassword(req.user.id, req.body);
+  res.status(httpStatus.NO_CONTENT).send();
+});
 
 module.exports = {
   createUser,
@@ -39,4 +44,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  updatePassword,
 };

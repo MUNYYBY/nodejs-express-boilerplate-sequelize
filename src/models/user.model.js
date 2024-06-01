@@ -28,25 +28,23 @@ async function isEmailTaken(email) {
     where: { email },
   });
 }
-async function findById(id) {
+async function findById(id, returnPassword) {
   const user = await prisma.user.findUnique({
     where: { id },
   });
-  if (user) {
+  if (user && !returnPassword) {
     delete user.password;
     return user;
   }
   return user;
 }
 async function UpdateUser(userId, body) {
-  const hashedPassword = await bcrypt.hash(body.password, 8);
   const updatedUser = await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
       ...body,
-      password: hashedPassword,
     },
   });
   delete updatedUser.password;

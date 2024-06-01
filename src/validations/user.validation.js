@@ -10,6 +10,13 @@ const createUser = {
   }),
 };
 
+const updatePassword = {
+  body: Joi.object().keys({
+    password: Joi.string().required().custom(password),
+    newPassword: Joi.string().required().custom(password),
+  }),
+};
+
 const getUsers = {
   query: Joi.object().keys({
     name: Joi.string(),
@@ -28,13 +35,19 @@ const getUser = {
 
 const updateUser = {
   params: Joi.object().keys({
-    userId: Joi.required().custom(objectId),
+    userId: Joi.number().required(),
   }),
   body: Joi.object()
     .keys({
-      email: Joi.string().email(),
-      password: Joi.string().custom(password),
       name: Joi.string(),
+      phone: Joi.string().length(11),
+      companyName: Joi.string(),
+      companyDomain: Joi.string(),
+      companyAddress: Joi.string(),
+      postalCode: Joi.string(),
+      city: Joi.string(),
+      country: Joi.string(),
+      isBlock: Joi.boolean(),
     })
     .min(1),
 };
@@ -51,4 +64,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  updatePassword,
 };

@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
@@ -32,10 +33,11 @@ const queryUsers = async (filter) => {
 /**
  * Get user by id
  * @param {ObjectId} id
+ * @param {ObjectId} returnPassword
  * @returns {Promise<User>}
  */
-const getUserById = async (id) => {
-  return User.findById(id);
+const getUserById = async (id, returnPassword) => {
+  return User.findById(id, returnPassword);
 };
 
 /**
@@ -79,6 +81,25 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+/**
+ * uddate user's password
+ * @param {Object} userBody
+ * @returns {Promise<User>}
+ */
+const UpdateUserPassword = async (userId, userBody) => {
+  const user = await getUserById(userId, true);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  const hashedPassword = await bcrypt.hash(userBody.password, 8);
+  const newHashedPassword = await bcrypt.hash(userBody.newPassword, 8);
+  if (user.password === hashedPassword) {
+    await User.UpdateUser({ password: newHashedPassword });
+    return true;
+  }
+  return false;
+};
+
 module.exports = {
   createUser,
   queryUsers,
@@ -86,4 +107,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  UpdateUserPassword,
 };
