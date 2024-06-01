@@ -18,11 +18,19 @@ model User {
   name            String
   email           String   @unique
   password        String
+  phone           String
   role            String   @default("user")
+  tokens          Token[]
+  companyName     String?
+  companyDomain   String?
+  companyAddress  String?
+  postalCode      String?
+  city            String?
+  country         String?
+  isBlock         Boolean  @default(false)
   isEmailVerified Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  tokens          Token[]
 }
 
 model Token {

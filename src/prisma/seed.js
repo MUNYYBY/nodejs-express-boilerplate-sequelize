@@ -8,11 +8,19 @@ async function main() {
 
   await prisma.user.create({
     data: {
-      name: 'Your Name',
+      name: 'LogicLeaps',
       email: 'info@logicleaps.com',
       password: hashedPassword,
+      phone: '123456789',
       role: 'admin',
-      isEmailVerified: true, // Change to false if the email is not verified
+      isEmailVerified: true,
+      companyName: 'LogicLeaps',
+      companyDomain: 'https://logicleaps.com',
+      companyAddress: 'xyz',
+      postalCode: '63100',
+      city: 'BWP',
+      country: 'PK',
+      isBlock: false,
     },
   });
 
