@@ -2,6 +2,7 @@ const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 const { connectDatabase, disconnectDatabase } = require('./prisma/prisma-connection');
+const db = require('./sequelize/models');
 
 let server;
 
@@ -11,6 +12,19 @@ connectDatabase().then(() => {
     logger.info(`Listening to port ${config.port}`);
   });
 });
+
+async function testConnection() {
+  try {
+    await db.sequelize.authenticate();
+    logger.info('Connection successful!');
+  } catch (error) {
+    logger.error('Unable to connect to the database:', error);
+  } finally {
+    await db.sequelize.close();
+  }
+}
+
+testConnection();
 
 const exitHandler = async () => {
   if (server) {
