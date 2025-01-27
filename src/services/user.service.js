@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { prisma } = require('../prisma/prisma-connection');
 
 /**
  * Create a user
@@ -46,7 +45,7 @@ const getUserById = async (id, returnPassword) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return prisma.user.findUnique({ where: { email } });
+  return User.findByEmail(email);
 };
 
 /**

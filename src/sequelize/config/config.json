@@ -1,12 +1,10 @@
 {
   "development": {
-    "username": "logicleaps",
-    "password": "!LogicLeaps!12",
+    "username": "postgres",
+    "password": null,
     "database": "test",
-    "host": "database-test.chmq0mwwe55m.us-east-1.rds.amazonaws.com",
-    "dialect": "postgres",
-    "ssl": true,
-    "port": 5432
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
   "test": {
     "username": "root",

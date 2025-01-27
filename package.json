@@ -22,7 +22,17 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check **/*.js",
-    "prettier:fix": "prettier --write **/*.js"
+    "prettier:fix": "prettier --write **/*.js",
+    "sequelize:migrate": "npx sequelize-cli db:migrate",
+    "sequelize:migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "sequelize:migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
+    "sequelize:seed": "npx sequelize-cli db:seed:all",
+    "sequelize:seed:undo": "npx sequelize-cli db:seed:undo",
+    "sequelize:seed:undo:all": "npx sequelize-cli db:seed:undo:all",
+    "sequelize:init": "npx sequelize-cli init",
+    "sequelize:model:generate": "npx sequelize-cli model:generate --name",
+    "sequelize:migration:generate": "npx sequelize-cli migration:generate --name",
+    "sequelize:seed:generate": "npx sequelize-cli seed:generate --name"
   },
   "keywords": [
     "node",
